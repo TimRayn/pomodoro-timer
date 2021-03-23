@@ -6,13 +6,45 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  
+  .timer-in-circle {
+    position: relative;
+    height: 366px;
+    width: 366px;
+    background-color: blueviolet;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    .svg-container {
+      position: absolute;
+      height: 360px;
+      width: 360px;
+      transform: rotate(-90deg);
+      pointer-events: none;
+      .progress {
+        width: 100%;
+        height: 100%;
+        fill: none;
+        stroke: #6b1d1d;
+        stroke-width: 11;
+        stroke-linecap: round;
+        stroke-dasharray: 1060 10000;
+      }
+    }
+    .timer-time{
+      padding-right: 5px;
+    }
+    .timer-button{
+      position: absolute;
+      bottom: 70px;
+      border: none;
+      padding-left: 21px;
+      background: transparent;
+      cursor: pointer;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
 }
-
-.timer-in-circle {
-  height: 366px;
-  width: 366px;
-  background-color: blueviolet;
-  border-radius: 50%;
-}
-
