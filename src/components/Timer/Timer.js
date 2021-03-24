@@ -14,7 +14,7 @@ function Timer({ time, remainingTime, isTimerGo, onTimerToggle, currentColor }) 
   const percent = useMemo(() => 1060 / time * (time - remainingTime),
     [remainingTime, time]);
 
-  const buttonText = isTimerGo ? 'RESTART' : 'PAUSE';
+  const buttonText = isTimerGo ? 'PAUSE' : 'START';
 
   return (
     <div className='timer-out-circle'>

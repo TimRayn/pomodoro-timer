@@ -6,9 +6,11 @@ import SettingsView from '../SettingsModal/SettingsModal';
 
 
 function App() {
-
+  const [settingPomodoroTime, setSettingPomodoroTime] = useState(25);
+  const [settingShortTime, setSettingShortTime] = useState(5);
+  const [settingLongTime, setSettingLongTime] = useState(10);
   const [isTimerGo, setIsTimerGo] = useState(false);
-  const [currentTime, setCurrentTime] = useState(5);
+  const [currentTime, setCurrentTime] = useState(settingPomodoroTime);
   const [currentRemainingTime, setCurrentRemainingTime] = useState(currentTime);
   const [timerInterval, setTimerInterval] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
@@ -17,14 +19,34 @@ function App() {
 
   function onTimerToggle() {
     setIsTimerGo(!isTimerGo);
-    if (!isTimerGo) clearInterval(timerInterval);
+    if (isTimerGo) clearInterval(timerInterval);
     else {
       setCurrentRemainingTime(currentTime);
       startTimer();
     }
   }
 
-  function toggleSettingsView(){
+  function toggleTimer(timer, isManually) {
+    switch (timer) {
+      case 'pomodoro':
+        setCurrentTime(settingPomodoroTime);
+        setCurrentRemainingTime(settingPomodoroTime);
+        break;
+      case 'short':
+        setCurrentTime(settingShortTime);
+        setCurrentRemainingTime(settingShortTime);
+        break;
+      case 'long':
+        setCurrentTime(settingLongTime);
+        setCurrentRemainingTime(settingLongTime);
+        break;
+      default:
+        break;
+    }
+    if(isManually) setIsTimerGo(!isTimerGo);
+  }
+
+  function toggleSettingsView() {
     setShowSettings(oldValue => !oldValue);
   }
 
@@ -36,9 +58,6 @@ function App() {
     setColor(newColor);
   }
 
-  useEffect(() => {
-    startTimer();
-  }, []);
 
   function startTimer() {
     setTimerInterval(setInterval(() => {
@@ -53,12 +72,13 @@ function App() {
 
   const modal = showSettings ? <div className='modal'></div> : null;
 
-  
+
 
   return (
     <div className={`app${font}`}>
       <TimerTabs
-        currentColor={color} />
+        currentColor={color}
+        toggleTimer={toggleTimer} />
       <Timer
         time={currentTime}
         remainingTime={currentRemainingTime}
