@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import './App.scss';
 import Timer from '../Timer/Timer';
 import TimerTabs from '../TimerTabs/TimerTabs';
+import SettingsView from '../SettingsModal/SettingsModal';
 
 
 function App() {
@@ -10,6 +11,9 @@ function App() {
   const [currentTime, setCurrentTime] = useState(5);
   const [currentRemainingTime, setCurrentRemainingTime] = useState(currentTime);
   const [timerInterval, setTimerInterval] = useState(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [font, setFont] = useState(' font-sans');
+  const [color, setColor] = useState(' peach');
 
   function onTimerToggle() {
     setIsTimerGo(!isTimerGo);
@@ -18,6 +22,18 @@ function App() {
       setCurrentRemainingTime(currentTime);
       startTimer();
     }
+  }
+
+  function toggleSettingsView(){
+    setShowSettings(oldValue => !oldValue);
+  }
+
+  function toggleFont(newFont) {
+    setFont(newFont);
+  }
+
+  function toggleColor(newColor) {
+    setColor(newColor);
   }
 
   useEffect(() => {
@@ -31,20 +47,32 @@ function App() {
   }
 
 
-  useMemo(() => { if (currentRemainingTime === 0) onTimerToggle(); },
+  useEffect(() => { if (currentRemainingTime <= 0) onTimerToggle(); },
     [currentRemainingTime]);
 
 
+  const modal = showSettings ? <div className='modal'></div> : null;
+
+  
+
   return (
-    <div className="app font-sans">
-      <TimerTabs/>
+    <div className={`app${font}`}>
+      <TimerTabs
+        currentColor={color} />
       <Timer
         time={currentTime}
         remainingTime={currentRemainingTime}
         onTimerToggle={onTimerToggle}
-        isTimerGo={isTimerGo} />
-
-      main div
+        isTimerGo={isTimerGo}
+        currentColor={color} />
+      <button className='settings-btn' onClick={toggleSettingsView}></button>
+      <SettingsView
+        isShow={showSettings}
+        toggleFont={toggleFont}
+        toggleColor={toggleColor}
+        toggleSettingsView={toggleSettingsView}
+        currentColor={color} />
+      {modal}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import './Timer.scss';
 
-function Timer({ time, remainingTime, isTimerGo, onTimerToggle }) {
+function Timer({ time, remainingTime, isTimerGo, onTimerToggle, currentColor }) {
 
   const remTimeStr = useMemo(() => {
     let minRemTime = Math.floor(remainingTime / 60);
@@ -21,7 +21,7 @@ function Timer({ time, remainingTime, isTimerGo, onTimerToggle }) {
       <div className='timer-in-circle'>
         <svg className='svg-container'>
           <circle
-            className='progress'
+            className={`progress${currentColor}`}
             cx="180"
             cy="180"
             r="169"

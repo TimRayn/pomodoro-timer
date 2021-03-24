@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .timer-out-circle {
   height: 410px;
   width: 410px;
@@ -6,6 +8,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
+  margin-bottom: 63px;
   .timer-in-circle {
     position: relative;
     height: 366px;
@@ -23,10 +26,19 @@
       transform: rotate(-90deg);
       pointer-events: none;
       .progress {
+        &.peach{
+          stroke: $peach;
+        }
+        &.cyan{
+          stroke: $cyan;
+        }
+        &.purple{
+          stroke: $purple;
+        }
+        transition: .3s ease-in-out;
         width: 100%;
         height: 100%;
         fill: none;
-        stroke: #6b1d1d;
         stroke-width: 11;
         stroke-linecap: round;
         stroke-dasharray: 1060 10000;
@@ -38,13 +50,8 @@
     .timer-button{
       position: absolute;
       bottom: 70px;
-      border: none;
       padding-left: 21px;
       background: transparent;
-      cursor: pointer;
-      &:focus{
-        outline: none;
-      }
     }
   }
 }

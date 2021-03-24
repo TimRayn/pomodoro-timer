@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './TimerTabs.scss';
 
-function TimerTabs(currentTab) {
+function TimerTabs({currentColor}) {
 
   
 
   return (
     <div className='panel'>
-      <button className='pomodoro-btn'>pomodoro</button>
-      <button className='short-btn'>short break</button>
-      <button className='long-btn'>long break</button>
+      <button className={`pomodoro-btn${currentColor}`}>pomodoro</button>
+      <button className={`short-btn${currentColor}`}>short break</button>
+      <button className={`long-btn${currentColor}`}>long break</button>
     </div>
   )
 }
