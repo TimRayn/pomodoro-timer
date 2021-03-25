@@ -27,6 +27,10 @@ function SettingsView({
   }
 
   function onSubmit() {
+    if (pomTime < 0 || shortTime < 0 || longTime < 0){
+      alert("You can not set time less than zero!");
+      return;
+    }
     settings.setSettingPomodoroTime(pomTime * 60);
     settings.setSettingShortTime(shortTime * 60);
     settings.setSettingLongTime(longTime * 60);

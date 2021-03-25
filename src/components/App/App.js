@@ -6,9 +6,9 @@ import SettingsView from '../SettingsModal/SettingsModal';
 
 
 function App() {
-  const [settingPomodoroTime, setSettingPomodoroTime] = useState(6);
-  const [settingShortTime, setSettingShortTime] = useState(2);
-  const [settingLongTime, setSettingLongTime] = useState(4);
+  const [settingPomodoroTime, setSettingPomodoroTime] = useState(25*60);
+  const [settingShortTime, setSettingShortTime] = useState(5*60);
+  const [settingLongTime, setSettingLongTime] = useState(10*60);
   const [isTimerGo, setIsTimerGo] = useState(false);
   const [activeTimer, setActiveTimer] = useState('pomodoro');
   const [currentTime, setCurrentTime] = useState(settingPomodoroTime);
@@ -85,7 +85,6 @@ function App() {
 
 
   useEffect(() => {
-    console.log(currentRemainingTime);
     if (currentRemainingTime <= -1) {
       if (activeTimer === 'pomodoro') {
         if (cycle === 4) {
