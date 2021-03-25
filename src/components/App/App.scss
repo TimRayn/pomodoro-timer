@@ -4,7 +4,8 @@
 body,
 html,
 #root {
-  height: 100%;
+  position: relative;
+  height: 99%;
   background-color: $dark-blue;
 }
 
