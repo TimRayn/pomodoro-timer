@@ -5,24 +5,35 @@
   height: 63px;
   display: flex;
   justify-content: space-between;
-  background: #161932;
+  background: $darkest-blue;
   border-radius: 100px;
   padding: 0px 8px;
   margin-bottom: 45px;
+  z-index: 100;
   button {
-    &.peach {
-      background-color: $peach;
+    transition: 0.3s;
+    background-color: transparent;
+    color: $gray;
+    opacity: 0.4;
+    &.active {
+      opacity: 1;
+      color: $dark-blue;
+      &.peach {
+        background-color: $peach;
+      }
+      &.cyan {
+        background-color: $cyan;
+      }
+      &.purple {
+        background-color: $purple;
+      }
     }
-    &.cyan {
-      background-color: $cyan;
-    }
-    &.purple {
-      background-color: $purple;
+    &:hover{
+      opacity: 1;
     }
     font-family: inherit;
     display: block;
     width: 100%;
-    color: #d7e0ff;
     border-radius: 100px;
     margin: 8px 0px;
   }

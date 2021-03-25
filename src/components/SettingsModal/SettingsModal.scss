@@ -13,11 +13,13 @@
       background-color: $peach;
     }
     &.cyan{
+      color: $dark-blue;
       background-color: $cyan;
     }
     &.purple{
       background-color: $purple;
     }
+    transition: 0.3s;
     width: 140px;
     height: 54px;
     position: relative;
@@ -87,7 +89,7 @@
           opacity: 0.6;
           cursor: pointer;
           box-sizing: border-box;
-          transition: 0.3s;
+          transition: 0.2s;
           padding: 6px;
           background-repeat: no-repeat;
           &.up {

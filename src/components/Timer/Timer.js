@@ -3,7 +3,9 @@ import './Timer.scss';
 
 function Timer({ time, remainingTime, isTimerGo, onTimerToggle, currentColor }) {
 
+
   const remTimeStr = useMemo(() => {
+    if(remainingTime < 0) remainingTime = 0;
     let minRemTime = Math.floor(remainingTime / 60);
     let secRemTime = remainingTime - minRemTime * 60;
     if (secRemTime < 10) secRemTime = '0' + secRemTime.toString();
@@ -14,7 +16,7 @@ function Timer({ time, remainingTime, isTimerGo, onTimerToggle, currentColor }) 
   const percent = useMemo(() => 1060 / time * (time - remainingTime),
     [remainingTime, time]);
 
-  const buttonText = isTimerGo ? 'PAUSE' : 'START';
+  const buttonText = isTimerGo ? 'PAUSE' : 'RESTART';
 
   return (
     <div className='timer-out-circle'>

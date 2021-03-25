@@ -6,27 +6,46 @@ import SettingsView from '../SettingsModal/SettingsModal';
 
 
 function App() {
-  const [settingPomodoroTime, setSettingPomodoroTime] = useState(25);
-  const [settingShortTime, setSettingShortTime] = useState(5);
-  const [settingLongTime, setSettingLongTime] = useState(10);
+  const [settingPomodoroTime, setSettingPomodoroTime] = useState(6);
+  const [settingShortTime, setSettingShortTime] = useState(2);
+  const [settingLongTime, setSettingLongTime] = useState(4);
   const [isTimerGo, setIsTimerGo] = useState(false);
+  const [activeTimer, setActiveTimer] = useState('pomodoro');
   const [currentTime, setCurrentTime] = useState(settingPomodoroTime);
   const [currentRemainingTime, setCurrentRemainingTime] = useState(currentTime);
   const [timerInterval, setTimerInterval] = useState(null);
   const [showSettings, setShowSettings] = useState(false);
   const [font, setFont] = useState(' font-sans');
   const [color, setColor] = useState(' peach');
+  const [cycle, setCycle] = useState(1);
 
   function onTimerToggle() {
     setIsTimerGo(!isTimerGo);
     if (isTimerGo) clearInterval(timerInterval);
     else {
       setCurrentRemainingTime(currentTime);
+      setCycle(1);
       startTimer();
     }
   }
 
-  function toggleTimer(timer, isManually) {
+  useEffect(() => {
+    if (activeTimer === 'pomodoro') {
+      setCurrentTime(settingPomodoroTime);
+      setCurrentRemainingTime(settingPomodoroTime);
+    }
+    else if (activeTimer === 'short') {
+      setCurrentTime(settingShortTime);
+      setCurrentRemainingTime(settingShortTime);
+    }
+    else {
+      setCurrentTime(settingLongTime);
+      setCurrentRemainingTime(settingLongTime);
+    }
+  }, [settingPomodoroTime, settingShortTime, settingLongTime]);
+
+  function toggleTimer(timer) {
+    setActiveTimer(timer);
     switch (timer) {
       case 'pomodoro':
         setCurrentTime(settingPomodoroTime);
@@ -43,7 +62,6 @@ function App() {
       default:
         break;
     }
-    if(isManually) setIsTimerGo(!isTimerGo);
   }
 
   function toggleSettingsView() {
@@ -66,8 +84,30 @@ function App() {
   }
 
 
-  useEffect(() => { if (currentRemainingTime <= 0) onTimerToggle(); },
-    [currentRemainingTime]);
+  useEffect(() => {
+    console.log(currentRemainingTime);
+    if (currentRemainingTime <= -1) {
+      if (activeTimer === 'pomodoro') {
+        if (cycle === 4) {
+          toggleTimer('long');
+        }
+        else {
+          toggleTimer('short');
+          setCycle(oldValue => oldValue + 1);
+        }
+      }
+      else if (activeTimer === 'short') {
+        toggleTimer('pomodoro');
+      }
+      else if (activeTimer === 'long') {
+        toggleTimer('pomodoro');
+        setCycle(1);
+        onTimerToggle();
+        setCurrentRemainingTime(0);
+      }
+    }
+  }, [currentRemainingTime]);
+
 
 
   const modal = showSettings ? <div className='modal'></div> : null;
@@ -78,7 +118,8 @@ function App() {
     <div className={`app${font}`}>
       <TimerTabs
         currentColor={color}
-        toggleTimer={toggleTimer} />
+        toggleTimer={toggleTimer}
+        activeTimer={activeTimer} />
       <Timer
         time={currentTime}
         remainingTime={currentRemainingTime}
@@ -91,7 +132,16 @@ function App() {
         toggleFont={toggleFont}
         toggleColor={toggleColor}
         toggleSettingsView={toggleSettingsView}
-        currentColor={color} />
+        currentColor={color}
+        currentFont={font}
+        settings={{
+          settingPomodoroTime,
+          setSettingPomodoroTime,
+          settingShortTime,
+          setSettingShortTime,
+          settingLongTime,
+          setSettingLongTime
+        }} />
       {modal}
     </div>
   );
